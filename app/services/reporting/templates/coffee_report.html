@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SEO-v2 Coffee Report</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Helvetica, Arial, sans-serif;
+                background-color: #f9fafb;
+                color: #020617;
+                /* Slate-950 */
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+            }
+
+            .header {
+                text-align: center;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .status-shield {
+                display: inline-block;
+                padding: 10px 20px;
+                border-radius: 8px;
+                font-weight: bold;
+                color: #ffffff;
+                margin-top: 10px;
+            }
+
+            .status-green {
+                background-color: #059669;
+                /* Emerald-600 */
+            }
+
+            .status-red {
+                background-color: #dc2626;
+                /* Red-600 */
+            }
+
+            .section {
+                margin-top: 20px;
+            }
+
+            .win-box {
+                background-color: #f0fdf4;
+                border-left: 4px solid #059669;
+                padding: 15px;
+                margin-top: 10px;
+                border-radius: 4px;
+            }
+
+            .diff-original {
+                background-color: #fef2f2;
+                padding: 8px;
+                text-decoration: line-through;
+                color: #991b1b;
+                margin-top: 8px;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+
+            .diff-new {
+                background-color: #ecfdf5;
+                padding: 8px;
+                color: #065f46;
+                margin-top: 4px;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+
+            .list {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            .list li {
+                padding: 8px 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+
+            .change-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .change-text {
+                flex: 1;
+            }
+
+            .undo-link {
+                display: inline-block;
+                padding: 6px 10px;
+                border-radius: 6px;
+                background-color: #0f172a;
+                color: #ffffff !important;
+                font-size: 12px;
+                font-weight: 600;
+                text-decoration: none;
+                white-space: nowrap;
+            }
+
+            .footer {
+                margin-top: 30px;
+                text-align: center;
+                font-size: 12px;
+                color: #64748b;
+            }
+
+            .veto-description {
+                font-size: 12px;
+                color: #64748b;
+                margin-top: 8px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="header">
+                <h2>Your Weekly Coffee Report</h2>
+                <p>Site: {{ data.site_id }}</p>
+                {% if data.zero_critical_failures %}
+                <div class="status-shield status-green">✓ All green!</div>
+                {% else %}
+                <div class="status-shield status-red">⚠ Attention Required</div>
+                {% endif %}
+            </div>
+
+            <div class="section">
+                <h3>Summary</h3>
+                <p>Total fixes applied this week: {{ data.total_fixes }}</p>
+            </div>
+
+            {% if data.win_of_the_week %}
+            <div class="section">
+                <h3>Win of the Week</h3>
+                <div class="win-box">
+                    <p>
+                        <strong>Action Taken:</strong> {{ data.win_of_the_week
+                        }}
+                    </p>
+                    {% if data.win_original or data.win_new %}
+                    <div class="diff-original">
+                        {{ data.win_original | default('No original text', true)
+                        }}
+                    </div>
+                    <div class="diff-new">
+                        {{ data.win_new | default('No new text', true) }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %} {% if change_rows %}
+            <div class="section">
+                <h3>Recent Fixes</h3>
+                <ul class="list">
+                    {% for row in change_rows[:5] %}
+                    <li>
+                        <div class="change-row">
+                            <span class="change-text"
+                                >{{ row.action_taken }}</span
+                            >
+                            {% if row.veto_url %}
+                            <a href="{{ row.veto_url }}" class="undo-link"
+                                >Undo</a
+                            >
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% elif data.fixes_list %}
+            <div class="section">
+                <h3>Recent Fixes</h3>
+                <ul class="list">
+                    {% for fix in data.fixes_list[:5] %}
+                    <li>{{ fix }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="footer">
+                <p>Not happy with these updates?</p>
+                <p class="veto-description">
+                    Use the Undo link next to a specific change to rollback only
+                    that item.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,412 @@
+/* PDF Report Styles - Print-optimized CSS */
+
+@page {
+    size: A4;
+    margin: 2cm 1.5cm;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #020617;
+    background-color: #ffffff;
+}
+
+/* Cover Page */
+.cover-page {
+    page-break-after: always;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 2cm 0;
+}
+
+.cover-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.agency-logo {
+    max-width: 200px;
+    max-height: 80px;
+    margin-bottom: 40px;
+}
+
+.agency-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #059669;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.agency-logo-placeholder span {
+    color: #ffffff;
+    font-size: 28pt;
+    font-weight: bold;
+}
+
+.cover-title {
+    font-size: 28pt;
+    font-weight: bold;
+    color: #020617;
+    margin-bottom: 16px;
+}
+
+.cover-site {
+    font-size: 16pt;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.cover-period {
+    font-size: 12pt;
+    color: #64748b;
+    margin-bottom: 40px;
+}
+
+.cover-ims {
+    background-color: #f0fdf4;
+    border: 2px solid #059669;
+    border-radius: 12px;
+    padding: 24px 48px;
+    display: inline-block;
+}
+
+.ims-label {
+    display: block;
+    font-size: 10pt;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ims-value {
+    display: block;
+    font-size: 36pt;
+    font-weight: bold;
+    color: #059669;
+}
+
+.cover-footer {
+    color: #64748b;
+    font-size: 10pt;
+}
+
+/* Page Breaks */
+.page-break {
+    page-break-before: always;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+}
+
+.section-title {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #020617;
+    border-bottom: 2px solid #059669;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.section-description {
+    color: #64748b;
+    font-size: 10pt;
+    margin-bottom: 16px;
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+}
+
+.summary-card.highlight {
+    background-color: #f0fdf4;
+    border-color: #059669;
+}
+
+.card-value {
+    display: block;
+    font-size: 20pt;
+    font-weight: bold;
+    color: #020617;
+}
+
+.summary-card.highlight .card-value {
+    color: #059669;
+}
+
+.card-label {
+    display: block;
+    font-size: 9pt;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Health Status */
+.health-status {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.health-status h3 {
+    font-size: 12pt;
+    margin-bottom: 8px;
+}
+
+.status-text {
+    font-size: 10pt;
+}
+
+.status-good {
+    color: #059669;
+}
+
+.status-warning {
+    color: #ca8a04;
+}
+
+.status-critical {
+    color: #dc2626;
+}
+
+/* Trend Table */
+.trend-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+}
+
+.trend-table th {
+    background-color: #020617;
+    color: #ffffff;
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.trend-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.trend-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.trend-up {
+    color: #059669;
+    font-weight: 600;
+}
+
+.trend-down {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Fix Items */
+.fix-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+}
+
+.fix-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.fix-url {
+    font-weight: 600;
+    color: #020617;
+    font-size: 10pt;
+}
+
+.fix-date {
+    color: #64748b;
+    font-size: 9pt;
+}
+
+.diff-container {
+    margin-top: 8px;
+}
+
+.diff-label {
+    font-weight: 600;
+    font-size: 9pt;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.diff-original {
+    background-color: #fef2f2;
+    border-left: 3px solid #dc2626;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 0 4px 4px 0;
+}
+
+.diff-original p {
+    color: #991b1b;
+    font-size: 9pt;
+}
+
+.diff-new {
+    background-color: #ecfdf5;
+    border-left: 3px solid #059669;
+    padding: 12px;
+    border-radius: 0 4px 4px 0;
+}
+
+.diff-new p {
+    color: #065f46;
+    font-size: 9pt;
+}
+
+/* Issues Grid */
+.issues-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.issue-category {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+}
+
+.issue-category h4 {
+    font-size: 10pt;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.issue-count {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.issue-count.critical {
+    color: #dc2626;
+}
+
+.issue-count.warning {
+    color: #ca8a04;
+}
+
+.issue-count.info {
+    color: #059669;
+}
+
+/* Improvements List */
+.improvements-list {
+    list-style: none;
+    counter-reset: improvement-counter;
+}
+
+.improvement-item {
+    counter-increment: improvement-counter;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    page-break-inside: avoid;
+}
+
+.improvement-item::before {
+    content: counter(improvement-counter);
+    background-color: #059669;
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10pt;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.improvement-title {
+    flex: 1;
+    font-size: 10pt;
+}
+
+.improvement-impact {
+    color: #059669;
+    font-weight: 600;
+    font-size: 10pt;
+}
+
+/* No Data */
+.no-data {
+    color: #64748b;
+    font-style: italic;
+    padding: 16px;
+    background-color: #f8fafc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Report Footer */
+.report-footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+    color: #64748b;
+    font-size: 9pt;
+}
+
+.report-footer p {
+    margin-bottom: 4px;
+}
+
+/* Print-specific adjustments */
+@media print {
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}

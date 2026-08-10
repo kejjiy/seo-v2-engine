@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Your SEO audit is ready</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: #f8fafc;
+                color: #0f172a;
+                margin: 0;
+                padding: 24px 0;
+            }
+            .card {
+                max-width: 640px;
+                margin: 0 auto;
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 16px;
+                padding: 32px;
+            }
+            .eyebrow {
+                color: #059669;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 12px;
+                letter-spacing: 0.08em;
+            }
+            .cta {
+                display: inline-block;
+                margin-top: 20px;
+                background: #0f172a;
+                color: #ffffff !important;
+                text-decoration: none;
+                padding: 12px 18px;
+                border-radius: 10px;
+                font-weight: 600;
+            }
+            .stats {
+                margin: 24px 0;
+                padding: 16px;
+                background: #f8fafc;
+                border-radius: 12px;
+            }
+            .footer {
+                color: #64748b;
+                font-size: 14px;
+                margin-top: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="eyebrow">SEO-v2 advisory audit</div>
+            <h1>Your report is ready for {{ site_url }}</h1>
+            <p>
+                The audit workflow has completed. You can now review the PDF summary,
+                inspect the recommendations, and use the dashboard as the single source
+                of truth for follow-up actions.
+            </p>
+            <div class="stats">
+                <p><strong>Health score snapshot:</strong> {{ health_score }}/100</p>
+                <p><strong>Recommendations prepared:</strong> {{ total_recommendations }}</p>
+            </div>
+            <a class="cta" href="{{ report_url }}">Open the audit report</a>
+            <p class="footer">
+                This MVP email shares access to the report in the dashboard rather than a PDF attachment,
+                which keeps delivery reliable while the product remains advisory-first.
+            </p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "seo-v2-engine"
+version = "0.1.0"
+description = "SEO-v2 Analysis Engine"
+authors = ["Youssef"]
+
+[tool.poetry.dependencies]
+python = "^3.12.1"
+fastapi = { extras = ["standard"], version = "^0.115.0" }
+uvicorn = "^0.34.0"
+celery = "^5.3.6"
+redis = "^4.1.0"
+fastapi-limiter = "^0.1.6"
+beautifulsoup4 = "^4.12.0"
+lxml = "^5.0.0"
+openai = "^1.0.0"
+tenacity = "^8.2.0"
+httpx = "^0.27.0"
+resend = "^2.1.0"
+pydantic = "^2.0.0"
+pydantic-settings = "^2.0.0"
+sqlalchemy = "^2.0.0"
+psycopg2-binary = "^2.9.0"
+weasyprint = "^60.0"
+jinja2 = "^3.1"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.0.0"
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+httpx = "^0.27.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

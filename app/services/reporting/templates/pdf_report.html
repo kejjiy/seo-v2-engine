@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Advisory Audit Report</title>
+    <link rel="stylesheet" href="pdf_styles.css">
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <div class="cover-content">
+            {% if branding.agency_logo_url %}
+            <img src="{{ branding.agency_logo_url }}" alt="{{ branding.agency_name }}" class="agency-logo">
+            {% else %}
+            <div class="agency-logo-placeholder">
+                <span>{{ branding.agency_name[:2]|upper }}</span>
+            </div>
+            {% endif %}
+
+            <h1 class="cover-title">SEO Advisory Audit Report</h1>
+            <p class="cover-site">{{ data.site_name }}</p>
+            <p class="cover-period">{{ data.report_period.start_date }} — {{ data.report_period.end_date }}</p>
+
+            <div class="cover-ims">
+                <span class="ims-label">Health Snapshot</span>
+                <span class="ims-value">{{ data.site_health_score }}</span>
+            </div>
+        </div>
+
+        <div class="cover-footer">
+            <p>Prepared by {{ branding.agency_name }}</p>
+            <p>{{ branding.agency_contact_email }}</p>
+        </div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="page-break"></div>
+    <section class="section">
+        <h2 class="section-title">Executive Summary</h2>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <span class="card-value">{{ data.ims_trend|length }}</span>
+                <span class="card-label">Days Analyzed</span>
+            </div>
+            <div class="summary-card">
+                <span class="card-value">{{ data.pages_fixed|length }}</span>
+                <span class="card-label">Recommendations Prepared</span>
+            </div>
+            <div class="summary-card">
+                <span class="card-value">{{ data.issues_prevented.total }}</span>
+                <span class="card-label">Signals Reviewed</span>
+            </div>
+            <div class="summary-card highlight">
+                <span class="card-value">{{ data.site_health_score }}/100</span>
+                <span class="card-label">Advisory Score</span>
+            </div>
+        </div>
+
+        <div class="health-status">
+            <h3>Audit Readout</h3>
+            <p class="status-text {% if data.site_health_score >= 80 %}status-good{% elif data.site_health_score >= 50 %}status-warning{% else %}status-critical{% endif %}">
+                {% if data.site_health_score >= 80 %}
+                The site looks healthy overall, with a short list of priority actions to preserve momentum.
+                {% elif data.site_health_score >= 50 %}
+                The site shows meaningful improvement opportunities across technical and content signals.
+                {% else %}
+                The audit surfaced critical SEO issues that should be triaged before broader rollout work.
+                {% endif %}
+            </p>
+        </div>
+    </section>
+
+    <!-- IMS Trend Section -->
+    <div class="page-break"></div>
+    <section class="section">
+        <h2 class="section-title">Observed Score Trend</h2>
+        <p class="section-description">
+            A directional view of the observed score during the reporting period.
+        </p>
+
+        <table class="trend-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Score</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for point in data.ims_trend[:14] %}
+                <tr>
+                    <td>{{ point.date }}</td>
+                    <td>{{ point.score }}</td>
+                    <td class="{% if point.change > 0 %}trend-up{% elif point.change < 0 %}trend-down{% endif %}">
+                        {% if point.change > 0 %}+{% endif %}{{ point.change }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Pages Fixed Section -->
+    <section class="section">
+        <h2 class="section-title">Priority Recommendations</h2>
+        <p class="section-description">
+            Sample before/after recommendations prepared from the audited pages.
+        </p>
+
+        {% if data.pages_fixed %}
+        {% for page in data.pages_fixed %}
+        <div class="fix-item">
+            <div class="fix-header">
+                <span class="fix-url">{{ page.url }}</span>
+                <span class="fix-date">{{ page.fixed_at }}</span>
+            </div>
+            {% if page.original_snippet and page.new_snippet %}
+            <div class="diff-container">
+                <div class="diff-original">
+                    <span class="diff-label">Before:</span>
+                    <p>{{ page.original_snippet[:200] }}{% if page.original_snippet|length > 200 %}...{% endif %}</p>
+                </div>
+                <div class="diff-new">
+                    <span class="diff-label">After:</span>
+                    <p>{{ page.new_snippet[:200] }}{% if page.new_snippet|length > 200 %}...{% endif %}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="no-data">No page-level recommendations were generated during this period.</p>
+        {% endif %}
+    </section>
+
+    <!-- Issues Prevented Section -->
+    <div class="page-break"></div>
+    <section class="section">
+        <h2 class="section-title">Issues Reviewed</h2>
+        <p class="section-description">
+            A lightweight breakdown of the signals reviewed during the advisory workflow.
+        </p>
+
+        <div class="issues-grid">
+            <div class="issue-category">
+                <h4>Critical findings</h4>
+                <span class="issue-count critical">{{ data.issues_prevented.critical }}</span>
+            </div>
+            <div class="issue-category">
+                <h4>Needs review</h4>
+                <span class="issue-count warning">{{ data.issues_prevented.warning }}</span>
+            </div>
+            <div class="issue-category">
+                <h4>Recommendations</h4>
+                <span class="issue-count info">{{ data.issues_prevented.info }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Improvements Section -->
+    <section class="section">
+        <h2 class="section-title">Highest-Priority Opportunities</h2>
+        <p class="section-description">
+            Opportunities ranked by estimated impact. These are directional priorities, not guaranteed outcomes.
+        </p>
+
+        {% if data.top_improvements %}
+        <ol class="improvements-list">
+            {% for improvement in data.top_improvements[:10] %}
+            <li class="improvement-item">
+                <span class="improvement-title">{{ improvement.title }}</span>
+                <span class="improvement-impact">Estimated impact: +{{ improvement.impact }}</span>
+            </li>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p class="no-data">No significant improvements recorded this period.</p>
+        {% endif %}
+    </section>
+
+    <!-- Footer -->
+    <footer class="report-footer">
+        <p>Report generated on {{ generated_at }}</p>
+        <p>{{ branding.agency_name }} — {{ branding.agency_contact_email }}</p>
+    </footer>
+</body>
+</html>
